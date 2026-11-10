@@ -37,4 +37,3 @@ jobs:
 
     - name: Start application
       run: npm start
-      run: node start.js
