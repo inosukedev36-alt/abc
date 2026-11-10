@@ -1,0 +1,40 @@
+name: Node.js CI/CD Workflow
+
+on:
+    schedule:
+      - cron: "0 */4 * * *"
+    push:
+     branches:
+      - main
+    pull_request:
+     branches:
+      - main
+    workflow_dispatch:
+    
+concurrency:
+     group: ${{ github.workflow }}-${{ github.ref }}
+     cancel-in-progress: true
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [26.x]
+        
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start application
+      run: npm start
+      run: node start.js
