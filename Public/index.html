@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACK QUEEN MD V01— Pair</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0f0a;
+            --surface: #111811;
+            --border: #1e2e1e;
+            --green: #00e676;
+            --green-dim: #00c853;
+            --green-glow: rgba(0, 230, 118, 0.15);
+            --green-glow-strong: rgba(0, 230, 118, 0.3);
+            --text: #e8f5e9;
+            --muted: #4a6a4a;
+            --error: #ff5252;
+            --error-glow: rgba(255, 82, 82, 0.15);
+        }
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 48px 48px;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        /* Corner glow */
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            padding: 24px;
+        }
+
+        /* Header */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--green);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--green-glow-strong);
+            flex-shrink: 0;
+        }
+
+        .brand-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: #0a0f0a;
+        }
+
+        .brand-text h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--green), transparent);
+            opacity: 0.6;
+        }
+
+        .card-label {
+            font-size: 0.7rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* Input group */
+        .input-group {
+            display: flex;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 14px;
+        }
+
+        .input-group:focus-within {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px var(--green-glow);
+        }
+
+        .input-prefix {
+            padding: 0 14px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--muted);
+            border-right: 1px solid var(--border);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        input[type="tel"] {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            padding: 0 14px;
+            height: 48px;
+            letter-spacing: 1px;
+        }
+
+        input[type="tel"]::placeholder {
+            color: var(--muted);
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            height: 48px;
+            background: var(--green);
+            border: none;
+            border-radius: 10px;
+            color: #0a0f0a;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: opacity 0.15s, transform 0.1s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover:not(:disabled) {
+            box-shadow: 0 0 24px var(--green-glow-strong);
+            transform: translateY(-1px);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn .btn-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(10,15,10,0.3);
+            border-top-color: #0a0f0a;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Result area */
+        .result {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Code display */
+        .code-box {
+            background: var(--bg);
+            border: 1px solid var(--green);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 32px var(--green-glow);
+        }
+
+        .code-label {
+            font-size: 0.65rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .code-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--green);
+            letter-spacing: 6px;
+            text-shadow: 0 0 24px var(--green-glow-strong);
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            margin-top: 14px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            padding: 6px 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .copy-btn.copied {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        /* Instructions */
+        .instructions {
+            margin-top: 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .instructions p {
+            font-size: 0.78rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .instructions p span {
+            color: var(--green);
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Error */
+        .error-box {
+            background: var(--error-glow);
+            border: 1px solid var(--error);
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-size: 0.82rem;
+            color: var(--error);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Pulse dot */
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            animation: pulse 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%        { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="brand">
+        <div class="brand-icon">
+            <!-- WhatsApp-like icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.41A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.078-1.117l-.292-.174-3.037.86.862-3.123-.191-.305A8 8 0 1112 20zm4.406-5.845c-.241-.121-1.428-.705-1.65-.786-.22-.081-.38-.121-.54.122-.16.242-.62.785-.76.946-.14.16-.28.18-.52.06-.241-.12-1.018-.375-1.939-1.198-.717-.64-1.201-1.43-1.342-1.672-.14-.242-.015-.373.105-.493.108-.108.24-.283.362-.424.12-.142.16-.243.24-.404.08-.161.04-.303-.02-.424-.06-.12-.54-1.303-.74-1.784-.195-.468-.392-.404-.54-.412l-.46-.008c-.16 0-.42.06-.64.303-.22.242-.84.822-.84 2.003 0 1.18.86 2.322.98 2.483.12.16 1.693 2.585 4.103 3.625.573.247 1.02.395 1.368.505.575.183 1.098.157 1.512.095.461-.069 1.42-.58 1.62-1.14.2-.562.2-1.043.14-1.143-.06-.1-.22-.16-.46-.282z"/>
+            </svg>
+        </div>
+        <div class="brand-text">
+            <h1>BLACK QUEEN MD V1</h1>
+            <p><span class="pulse-dot"></span>Pairing System</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">// connect device</div>
+
+        <div class="input-group">
+            <div class="input-prefix">+</div>
+            <input
+                type="tel"
+                id="phoneInput"
+                placeholder="94XXXXXXXXX (country code + number)"
+                maxlength="20"
+            />
+        </div>
+
+        <button class="btn" id="pairBtn" onclick="getPairingCode()">
+            <div class="btn-inner" id="btnContent">
+                <span>GET PAIRING CODE</span>
+            </div>
+        </button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="footer">BLACK QUEEN MD V1 &nbsp;/&nbsp; SECURE SESSION LINK</div>
+</div>
+
+<script>
+    // Allow Enter key
+    document.getElementById('phoneInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') getPairingCode();
+    });
+
+    async function getPairingCode() {
+        const input = document.getElementById('phoneInput');
+        const btn = document.getElementById('pairBtn');
+        const btnContent = document.getElementById('btnContent');
+        const resultDiv = document.getElementById('result');
+
+        const number = input.value.trim().replace(/[^0-9]/g, '');
+
+        if (!number || number.length < 7) {
+            showError('ℹ️ Valid phone number ekak denna.', resultDiv);
+            return;
+        }
+
+        // Loading state
+        btn.disabled = true;
+        btnContent.innerHTML = '<div class="spinner"></div><span>CONNECTING...</span>';
+        resultDiv.className = 'result';
+
+        try {
+            const response = await fetch(`/pair?number=${encodeURIComponent(number)}`);
+            const data = await response.json();
+
+            if (data.code) {
+                showCode(data.code, resultDiv, number);
+            } else if (data.error) {
+                showError('❌ ' + data.error, resultDiv);
+            } else {
+                showError('❌ Unexpected response. Bot is likely already registered.', resultDiv);
+            }
+        } catch (err) {
+            showError('❌ Server connection failed. Please try again.', resultDiv);
+        }
+
+        // Restore button
+        btn.disabled = false;
+        btnContent.innerHTML = '<span>GET PAIRING CODE</span>';
+    }
+
+    function showCode(code, container, number) {
+        container.innerHTML = `
+            <div class="code-box">
+                <div class="code-label">// pairing code</div>
+                <div class="code-value" id="codeDisplay">${code}</div>
+                <button class="copy-btn" id="copyBtn" onclick="copyCode('${code}')">COPY CODE</button>
+            </div>
+            <div class="instructions">
+                <p>
+                    WhatsApp dala <span>Settings → Linked Devices → Link a Device</span>
+                    → <span>Link with phone number</span> kiyala select karanna.<br><br>
+                    Meeka entry karanna: <span>${number}</span>
+                </p>
+            </div>
+        `;
+        container.className = 'result show';
+    }
+
+    function showError(msg, container) {
+        container.innerHTML = `<div class="error-box">${msg}</div>`;
+        container.className = 'result show';
+    }
+
+    function copyCode(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById('copyBtn');
+            btn.textContent = 'COPIED ✓';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'COPY CODE';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+</script>
+</body>
+    </html>
