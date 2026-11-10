@@ -1,0 +1,19 @@
+# Query: 𝓢𝓗𝓘𝓡𝓞_𝓜𝓓
+# ContextLines: 1
+
+3 results - 3 files
+
+pair.js:
+  88          contactMessage: { 
+  89:             displayName: '❤️𝓢𝓗𝓘𝓡𝓞_𝓜𝓓❤️', 
+  90              vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Alip;;;;\nFN:Alip\nTEL;waid=13135550002:+1 313 555 0002\nEND:VCARD` 
+
+plugins/faketest.js:
+  11          contactMessage: { 
+  12:             displayName: '❤️𝓢𝓗𝓘𝓡𝓞_𝓜𝓓❤️', 
+  13              vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Alip;;;;\nFN:Alip\nTEL;waid=13135550002:+1 313 555 0002\nEND:VCARD` 
+
+plugins/main-menu.js:
+  14          contactMessage: { 
+  15:             displayName: '❤️𝓢𝓗𝓘𝓡𝓞_𝓜𝓓❤️', 
+  16              vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Alip;;;;\nFN:Alip\nTEL;waid=13135550002:+1 313 555 0002\nEND:VCARD` 
